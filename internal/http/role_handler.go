@@ -18,6 +18,7 @@ func NewRoleHandler(uc *usecase.RoleUseCase) *RoleHandler {
 	return &RoleHandler{uc: uc}
 }
 
+
 // CreateRole - Handles role creation
 func (h *RoleHandler) CreateRole(w http.ResponseWriter, r *http.Request) {
 	var role domain.Role

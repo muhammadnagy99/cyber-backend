@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	handlers "cyber-rbac/internal/http"
+	api_handlers "cyber-rbac/internal/http"
 	"cyber-rbac/internal/middleware"
 	"cyber-rbac/internal/repository"
 	"cyber-rbac/internal/usecase"
@@ -12,6 +12,7 @@ import (
 	"cyber-rbac/pkg/logger"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/handlers"
 )
 
 func main() {
@@ -38,9 +39,9 @@ func main() {
 	rolePermissionUseCase := usecase.NewRolePermissionUseCase(rolePermissionRepo)
 
 	// Initialize handlers
-	roleHandler := handlers.NewRoleHandler(roleUseCase)
-	permissionHandler := handlers.NewPermissionHandler(permissionUseCase)
-	rolePermissionHandler := handlers.NewRolePermissionHandler(rolePermissionUseCase)
+	roleHandler := api_handlers.NewRoleHandler(roleUseCase)
+	permissionHandler := api_handlers.NewPermissionHandler(permissionUseCase)
+	rolePermissionHandler := api_handlers.NewRolePermissionHandler(rolePermissionUseCase)
 
 	// Setup Router
 	router := mux.NewRouter()
@@ -71,7 +72,15 @@ func main() {
 	authRouter.HandleFunc("/roles/{role_id}/permissions", rolePermissionHandler.GetPermissions).Methods("GET")
 	authRouter.HandleFunc("/roles/{role_id}/permissions/{permission_id}/check", rolePermissionHandler.HasPermission).Methods("GET")
 
+	// Apply CORS Middleware
+	corsHandler := handlers.CORS(
+		handlers.AllowedOrigins([]string{"*"}), // Allow all origins
+		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}), // Include OPTIONS for preflight
+		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}), // Allow Authorization header
+		handlers.AllowCredentials(), // Allow credentials (if needed)
+	)(router)
+
 	// Start server
 	logger.Logger.Infof("Server is running on port %s...", cfg.ServerPort)
-	log.Fatal(http.ListenAndServe(":"+cfg.ServerPort, router))
+	log.Fatal(http.ListenAndServe(":"+cfg.ServerPort, corsHandler))
 }

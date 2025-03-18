@@ -1,0 +1,327 @@
+openapi: 3.0.0
+info:
+  title: RBAC API Collection
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Roles
+  - name: Permissions
+  - name: Role-Permission Management
+paths:
+  /roles:
+    post:
+      tags:
+        - Roles
+      summary: Create Role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: admin
+                name: Administrator
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Roles
+      summary: Get All Roles
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /roles/admin:
+    get:
+      tags:
+        - Roles
+      summary: Get Role by ID
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Roles
+      summary: Update Role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: admin
+                name: Updated Administrator
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Roles
+      summary: Delete Role
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /permissions:
+    post:
+      tags:
+        - Permissions
+      summary: Create Permission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: read
+                name: Read Access
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Permissions
+      summary: Get All Permissions
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /permissions/read:
+    get:
+      tags:
+        - Permissions
+      summary: Get Permission by ID
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Permissions
+      summary: Update Permission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: read
+                name: Updated Read Access
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Permissions
+      summary: Delete Permission
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /roles/admin/permissions/read:
+    post:
+      tags:
+        - Role-Permission Management
+      summary: Assign Permission to Role
+      requestBody:
+        content: {}
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Role-Permission Management
+      summary: Remove Permission from Role
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /roles/admin/permissions:
+    get:
+      tags:
+        - Role-Permission Management
+      summary: Get Permissions for Role
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /roles/admin/permissions/write/check:
+    get:
+      tags:
+        - Role-Permission Management
+      summary: Check if Role has Permission
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer <YOUR_BEARER_TOKEN>
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
